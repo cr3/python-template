@@ -56,6 +56,12 @@ Setting up
     - `Git`_
     - `Miniconda`_ - Check the box "Add to PATH environment variable"
 
+-   Install dependencies with ``conda``:
+
+    .. code-block:: text
+
+        > conda install --channel=conda-forge make poetry
+
 -   Make sure you have a `GitHub account`_.
 -   Configure git with your `username`_ and `email`_.
 
@@ -74,18 +80,17 @@ Setting up
     .. code-block:: text
 
         > git config --global credential.helper manager
-        > git clone https://github.com/cr3/python-template
-        Cloning into 'python-template'...
+        > git clone https://github.com/cr3/changeme
+        Cloning into 'changeme'...
 
     - Select "manager"
     - Check "Always use this from now on" and press "Select"
     - Sign in with token and paste your token
 
--   `Clone`_ the main repository locally.
+-   Change into the ``changeme`` directory:
 
     .. code-block:: text
 
-        > git clone https://github.com/cr3/changeme
         > cd changeme
 
 -   Create a virtualenv.
