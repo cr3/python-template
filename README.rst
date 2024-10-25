@@ -56,7 +56,7 @@ In GitHub -> Settings:
 
 In the source:
 
-1. Rewrite this ``README.md``.
+1. Rewrite this ``README.rst``.
 2. Update the ``LICENSE.rst``.
 3. Replace "changeme" with your project details in:
 
