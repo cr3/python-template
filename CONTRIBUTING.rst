@@ -116,7 +116,7 @@ Troubleshooting
         Solving environment: failed
 
         ResolvePackageNotFound:
-          - python=3.11
+          - python=3.12
 
     The cache is probably corrupt - run ``conda clean -a``.
 
