@@ -9,7 +9,7 @@ from importlib.metadata import distribution
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "changeme"
-copyright = "2023, changeme"  # noqa: A001
+copyright = "2025, changeme"  # noqa: A001
 author = "changeme"
 version = release = distribution(project).version
 
