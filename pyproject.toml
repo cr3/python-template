@@ -1,16 +1,13 @@
-[tool.poetry]
+[project]
 name = "changeme"
 version = "0.0.0"
 description = "changeme"
-authors = ["changeme"]
+authors = [
+    {name = "changeme", email = "changeme@changeme.com"},
+]
 readme = "README.rst"
 repository = "https://github.com/cr3/changeme"
-packages = [
-    { include = "changeme" },
-]
-
-[tool.poetry.dependencies]
-python = "^3.9"
+requires-python = ">=3.9,<4.0"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.2.3"
