@@ -71,7 +71,7 @@ In the source:
 Using the new repository
 ------------------------
 
-1. ``make setup`` to setup the Python environment with ``conda`` and install the poetry environment.
+1. ``make setup`` to setup the Python environment and install the poetry environment.
 2. ``make check`` to check syntax and formatting.
 3. ``make test`` to run tests.
 4. ``make docs`` to build documentation - requires first running ``poetry install --with docs``.

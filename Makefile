@@ -1,17 +1,42 @@
 VENV := .venv
 
-PYTHON := poetry run python
+# Choose uv or poetry
+UV      := $(shell command -v uv 2>/dev/null)
+POETRY  := $(shell command -v poetry 2>/dev/null)
+
+ifeq ($(UV),)
+  ifeq ($(POETRY),)
+    $(error Neither uv nor poetry is installed. Please install one of them.)
+  else
+    TOOL := poetry
+  endif
+else
+  TOOL := uv
+endif
+
+ifeq ($(TOOL),uv)
+  INSTALL = uv sync --frozen
+  CHECK   = uv lock --check
+  RUN     = uv run
+else
+  INSTALL = poetry install --sync
+  CHECK   = poetry check --lock
+  RUN     = poetry run
+endif
+
+PYTHON := $(RUN) python
 TOUCH := $(PYTHON) -c 'import sys; from pathlib import Path; Path(sys.argv[1]).touch()'
 
 poetry.lock: pyproject.toml
 	poetry lock
 
-# Build venv with both conda and python deps.
-$(VENV): environment.yml
-	@echo Installing Conda environment
-	@conda env update --prefix $@ --prune --file $^
-	@echo Installing Poetry environment
-	@poetry install
+uv.lock: pyproject.toml
+	uv lock
+
+# Build venv and install python deps.
+$(VENV):
+	@echo Installing environment
+	@$(INSTALL)
 	@$(TOUCH) $@
 
 # Convenience target to build venv
@@ -20,41 +45,41 @@ setup: $(VENV)
 
 .PHONY: check
 check: $(VENV)
-	@echo Checking Poetry lock: Running poetry check --lock
-	@poetry check --lock
+	@echo Checking $(TOOL) lock: Running $(CHECK)
+	@$(CHECK)
 	@echo Linting code: Running pre-commit
-	@poetry run pre-commit run -a
+	@$(RUN) pre-commit run -a
 
 .PHONY: test
 test: $(VENV)
 	@echo Testing code: Running pytest
-	@poetry run coverage run -p -m pytest
+	@$(RUN) coverage run -p -m pytest
 
 .PHONY: coverage
 coverage: $(VENV)
 	@echo Testing covarage: Running coverage
-	@poetry run coverage combine
-	@poetry run coverage html --skip-covered --skip-empty
-	@poetry run coverage report
+	@$(RUN) coverage combine
+	@$(RUN) coverage html --skip-covered --skip-empty
+	@$(RUN) coverage report
 
 .PHONY: docs
 docs: $(VENV)
 	@echo Building docs: Running sphinx-build
-	@poetry run sphinx-build -W -d build/doctrees docs build/html
+	@$(RUN) sphinx-build -W -d build/doctrees docs build/html
 
 .PHONY: build
 build:
 	@echo Creating wheel file
-	@poetry build
+	@$(PYTHON) -m build
 
 .PHONY: publish
 publish:
 	@echo Publishing: Dry run
-	@poetry config repositories.test-pypi https://test.pypi.org/legacy/
-	@poetry config pypi-token.test-pypi $(PYPI_TOKEN)
-	@poetry publish --repository test-pypi --dry-run
+	@TWINE_USERNAME=__token__ TWINE_PASSWORD=$(PYPI_TOKEN) \
+	  python -m twine upload --repository-url https://test.pypi.org/legacy/ --dry-run dist/*
 	@echo Publishing
-	@poetry publish --repository test-pypi
+	@TWINE_USERNAME=__token__ TWINE_PASSWORD=$(PYPI_TOKEN) \
+	  python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
 .PHONY: clean
 clean:

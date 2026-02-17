@@ -1,6 +1,6 @@
 [project]
 name = "changeme"
-version = "0.0.0"
+dynamic = ["version"]
 description = "changeme"
 authors = [
     {name = "changeme", email = "changeme@changeme.com"},
@@ -9,29 +9,35 @@ readme = "README.rst"
 repository = "https://github.com/cr3/changeme"
 requires-python = ">=3.10,<4.0"
 
-[tool.poetry.group.test.dependencies]
-coverage = "^7.2.3"
-pytest = "^7.2.2"
+[project.optional-dependencies]
 
-[tool.poetry.group.check]
-optional = true
+test = [
+  "coverage>=7.2.3,<8.0.0",
+  "pytest>=7.2.2,<8.0.0",
+]
 
-[tool.poetry.group.check.dependencies]
-ruff = "^0.0.265"
-black = "^23.3.0"
-pre-commit = "^3.3.1"
+check = [
+  "black>=23.3.0,<24.0.0",
+  "pre-commit>=3.3.1,<4.0.0",
+  "pyyaml>=6.0.3,<7.0.0",
+  "ruff>=0.0.265,<1.0.0",
+]
 
-[tool.poetry.group.docs]
-optional = true
-
-[tool.poetry.group.docs.dependencies]
-sphinx = "^6.1.3"
-sphinxcontrib-log-cabinet = "^1.0.1"
-sphinx-rtd-theme = "^1.2.0"
+docs = [
+  "sphinx>=6.1.3,<7.0.0",
+  "sphinxcontrib-log-cabinet>=1.0.1,<2.0.0",
+  "sphinx-rtd-theme>=1.2.0,<2.0.0",
+]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.poetry]
+package-mode = false
 
 [tool.black]
 line-length = 120
