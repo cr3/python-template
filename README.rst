@@ -8,7 +8,7 @@ Benefits of this template
 
 * Installs the expected Python version under ``.venv/``.
 * Installs Python dependencies also under ``.venv/``.
-* Pins dependency versions in ``poetry.lock``.
+* Pins dependency versions in ``uv.lock``.
 * Provides default template for pull requests.
 * Checks for syntax and format on pull requests.
 * Runs tests on pull requests.
@@ -71,11 +71,11 @@ In the source:
 Using the new repository
 ------------------------
 
-1. ``make setup`` to setup the Python environment and install the poetry environment.
+1. ``make setup`` to setup the uv environment.
 2. ``make check`` to check syntax and formatting.
 3. ``make test`` to run tests.
-4. ``make docs`` to build documentation - requires first running ``poetry install --with docs``.
-5. ``poetry add [package]`` to install ``[package]`` in ``.venv/``, add it in ``pyproject.toml`` and pin its version in ``poetry.lock``.
+4. ``make docs`` to build documentation.
+5. ``uv add [package]`` to install ``[package]`` in ``.venv/``, add it in ``pyproject.toml`` and pin its version in ``uv.lock``.
 
 Maintaining the new repository
 ------------------------------

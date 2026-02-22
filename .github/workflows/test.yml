@@ -9,10 +9,6 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        tool: [uv, poetry]
     steps:
       - name: Check out
         uses: actions/checkout@v6
@@ -23,14 +19,7 @@ jobs:
           key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Set up (uv)
-        if: ${{ matrix.tool == 'uv' }}
         uses: ./.github/actions/setup-uv-env
-        with:
-          extras: check
-
-      - name: Set up (poetry)
-        if: ${{ matrix.tool == 'poetry' }}
-        uses: ./.github/actions/setup-poetry-env
         with:
           extras: check
 

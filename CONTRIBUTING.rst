@@ -60,7 +60,7 @@ Setting up
 
     .. code-block:: text
 
-        > conda install --channel=conda-forge make poetry
+        > conda install --channel=conda-forge make uv
 
 -   Make sure you have a `GitHub account`_.
 -   Configure git with your `username`_ and `email`_.
@@ -163,7 +163,6 @@ Check syntax with ``black`` and ``ruff``:
 
 .. code-block:: text
 
-    > poetry install --with check
     > make check
 
 
@@ -174,7 +173,6 @@ Build the docs in the ``docs`` directory using Sphinx:
 
 .. code-block:: text
 
-    > poetry install --with docs
     > make docs
 
 Update the apidoc when adding new modules:

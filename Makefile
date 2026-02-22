@@ -1,34 +1,8 @@
 VENV := .venv
 
-# Choose uv or poetry
-UV      := $(shell command -v uv 2>/dev/null)
-POETRY  := $(shell command -v poetry 2>/dev/null)
-
-ifeq ($(UV),)
-  ifeq ($(POETRY),)
-    $(error Neither uv nor poetry is installed. Please install one of them.)
-  else
-    TOOL := poetry
-  endif
-else
-  TOOL := uv
-endif
-
-ifeq ($(TOOL),uv)
-  INSTALL = uv sync --frozen
-  CHECK   = uv lock --check
-  RUN     = uv run
-else
-  INSTALL = poetry install --sync
-  CHECK   = poetry check --lock
-  RUN     = poetry run
-endif
-
+RUN := uv run
 PYTHON := $(RUN) python
 TOUCH := $(PYTHON) -c 'import sys; from pathlib import Path; Path(sys.argv[1]).touch()'
-
-poetry.lock: pyproject.toml
-	poetry lock
 
 uv.lock: pyproject.toml
 	uv lock
@@ -36,7 +10,7 @@ uv.lock: pyproject.toml
 # Build venv and install python deps.
 $(VENV):
 	@echo Installing environment
-	@$(INSTALL)
+	@uv sync --frozen --all-extras
 	@$(TOUCH) $@
 
 # Convenience target to build venv
@@ -45,8 +19,8 @@ setup: $(VENV)
 
 .PHONY: check
 check: $(VENV)
-	@echo Checking $(TOOL) lock: Running $(CHECK)
-	@$(CHECK)
+	@echo Checking uv.lock: Running uv lock --check
+	@uv lock --check
 	@echo Linting code: Running pre-commit
 	@$(RUN) pre-commit run -a
 

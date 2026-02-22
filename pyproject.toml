@@ -36,9 +36,6 @@ build-backend = "hatchling.build"
 [tool.hatch.version]
 source = "vcs"
 
-[tool.poetry]
-package-mode = false
-
 [tool.black]
 line-length = 120
 target-version = ["py39"]
