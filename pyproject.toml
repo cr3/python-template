@@ -7,7 +7,7 @@ authors = [
 ]
 readme = "README.rst"
 repository = "https://github.com/cr3/changeme"
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.12,<4.0"
 
 [project.optional-dependencies]
 
