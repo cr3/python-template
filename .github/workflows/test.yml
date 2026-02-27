@@ -46,7 +46,7 @@ jobs:
         run: make test
 
       - name: "Upload coverage data"
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-data-${{ matrix.python-version }}
           path: .coverage.*
@@ -68,7 +68,7 @@ jobs:
           extras: test
 
       - name: Download coverage data
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           pattern: coverage-data-*
           merge-multiple: true
@@ -77,7 +77,7 @@ jobs:
         run: make coverage
 
       - name: Upload HTML report if check failed.
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: html-report
           path: htmlcov
