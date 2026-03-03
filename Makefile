@@ -9,7 +9,7 @@ uv.lock: pyproject.toml
 
 # Build venv and install python deps.
 $(VENV):
-	@echo Installing environment
+	@echo "==> Installing environment..."
 	@uv sync --frozen --all-extras
 	@$(TOUCH) $@
 
@@ -19,31 +19,31 @@ setup: $(VENV)
 
 .PHONY: check
 check: $(VENV)
-	@echo Checking uv.lock: Running uv lock --check
+	@echo "==> Checking uv lock..."
 	@uv lock --check
-	@echo Linting code: Running pre-commit
-	@$(RUN) pre-commit run -a
+	@echo "==> Linting Python code..."
+	@$(RUN) ruff check .
 
 .PHONY: test
 test: $(VENV)
-	@echo Testing code: Running pytest
+	@echo "==> Testing Python code..."
 	@$(RUN) coverage run -p -m pytest
 
 .PHONY: coverage
 coverage: $(VENV)
-	@echo Testing covarage: Running coverage
+	@echo "==> Checking coverage..."
 	@$(RUN) coverage combine
 	@$(RUN) coverage html --skip-covered --skip-empty
 	@$(RUN) coverage report
 
 .PHONY: docs
 docs: $(VENV)
-	@echo Building docs: Running sphinx-build
+	@echo "==> Building docs..."
 	@$(RUN) sphinx-build -W -d build/doctrees docs build/html
 
 .PHONY: clean
 clean:
-	@echo Cleaning ignored files
+	@echo "==> Cleaning ignored files..."
 	@git clean -Xfd
 
 .DEFAULT_GOAL := test

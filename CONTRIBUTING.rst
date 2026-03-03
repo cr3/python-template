@@ -33,9 +33,7 @@ an issue that interests you.
 
 Include the following in your patch:
 
--   Use `Black`_ to format your code. This and other tools will run
-    automatically if you install `pre-commit`_ using the instructions
-    below.
+-   Use `Ruff`_ to format your code.
 -   Include tests if your patch adds or changes code. Make sure the test
     fails without your patch.
 -   Update any relevant docs pages and docstrings. Docs pages and
@@ -44,8 +42,7 @@ Include the following in your patch:
     entries. Also include ``.. versionchanged::`` inline changelogs in
     relevant docstrings.
 
-.. _Black: https://black.readthedocs.io
-.. _pre-commit: https://pre-commit.com
+.. _Ruff: https://docs.astral.sh/ruff/
 
 
 Setting up
@@ -159,7 +156,7 @@ Run the basic test suite with pytest:
 Checking the syntax
 -------------------
 
-Check syntax with ``black`` and ``ruff``:
+Check syntax with ``ruff``:
 
 .. code-block:: text
 
