@@ -8,7 +8,7 @@ uv.lock: pyproject.toml
 	uv lock
 
 # Build venv and install python deps.
-$(VENV):
+$(VENV): uv.lock
 	@echo "==> Installing environment..."
 	@uv sync --frozen --all-extras
 	@$(TOUCH) $@
