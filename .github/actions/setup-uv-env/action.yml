@@ -14,6 +14,10 @@ inputs:
     required: false
     description: "Include optional dependencies"
     default: ""
+  sync:
+    required: false
+    description: "Run uv sync"
+    default: "true"
   working-directory:
     required: false
     description: "Working directory"
@@ -36,6 +40,7 @@ runs:
         enable-cache: true
 
     - name: Install dependencies
+      if: ${{ inputs.sync == 'true' }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: |
